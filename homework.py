@@ -111,9 +111,9 @@ class SportsWalking(Training):
         coeff_calorie_2: int = 2
         coeff_calorie_3: float = 0.029
         duration_min = self.duration * 60
-        calories: float = ((coeff_calorie_1 * self.weight +
-                            (self.get_mean_speed() ** coeff_calorie_2
-                             // self.height) * coeff_calorie_3
+        calories: float = ((coeff_calorie_1 * self.weight
+                            + (self.get_mean_speed() ** coeff_calorie_2
+                               // self.height) * coeff_calorie_3
                             * self.weight) * duration_min)
         return calories
 
