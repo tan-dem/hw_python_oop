@@ -86,8 +86,9 @@ class Running(Training):
         coeff_calorie_1: int = 18
         coeff_calorie_2: int = 20
         duration_min = self.duration * 60
-        calories: float = (coeff_calorie_1 * self.get_mean_speed()
-                           - coeff_calorie_2) * self.weight / self.M_IN_KM * duration_min
+        calories: float = ((coeff_calorie_1 * self.get_mean_speed()
+                            - coeff_calorie_2) * self.weight
+                           / self.M_IN_KM * duration_min)
         return calories
 
 
@@ -110,9 +111,10 @@ class SportsWalking(Training):
         coeff_calorie_2: int = 2
         coeff_calorie_3: float = 0.029
         duration_min = self.duration * 60
-        calories: float = (coeff_calorie_1 * self.weight + (self.get_mean_speed()
-                                                            ** coeff_calorie_2 // self.height) * coeff_calorie_3
-                           * self.weight) * duration_min
+        calories: float = ((coeff_calorie_1 * self.weight +
+                            (self.get_mean_speed() ** coeff_calorie_2
+                             // self.height) * coeff_calorie_3
+                            * self.weight) * duration_min)
         return calories
 
 
@@ -135,14 +137,16 @@ class Swimming(Training):
 
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
-        speed: float = self.length_pool * self.count_pool / self.M_IN_KM / self.duration
+        speed: float = (self.length_pool * self.count_pool
+                        / self.M_IN_KM / self.duration)
         return speed
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         coeff_calorie_1: float = 1.1
         coeff_calorie_2: int = 2
-        calories: float = (self.get_mean_speed() + coeff_calorie_1) * coeff_calorie_2 * self.weight
+        calories: float = ((self.get_mean_speed() + coeff_calorie_1)
+                           * coeff_calorie_2 * self.weight)
         return calories
 
 
