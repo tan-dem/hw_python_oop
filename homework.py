@@ -82,11 +82,11 @@ class Running(Training):
         """Получить количество затраченных калорий."""
         duration_min = self.duration * self.MIN_IN_HOUR
         calories: float = (
-                (self.CALORIES_MEAN_SPEED_MULTIPLIER
-                 * self.get_mean_speed()
-                 - self.CALORIES_MEAN_SPEED_SHIFT)
-                * self.weight
-                / self.M_IN_KM * duration_min
+            (self.CALORIES_MEAN_SPEED_MULTIPLIER
+             * self.get_mean_speed()
+             - self.CALORIES_MEAN_SPEED_SHIFT)
+            * self.weight
+            / self.M_IN_KM * duration_min
         )
         return calories
 
@@ -111,14 +111,14 @@ class SportsWalking(Training):
         """Получить количество затраченных калорий."""
         duration_min = self.duration * self.MIN_IN_HOUR
         calories: float = (
-                (self.CALORIES_WEIGHT_MULTIPLIER
-                 * self.weight
-                 + (self.get_mean_speed()
-                    ** self.CALORIES_MEAN_SPEED_EXPONENT
-                    // self.height)
-                 * self.CALORIES_LOCAL_MULTIPLIER_WALK
-                 * self.weight)
-                * duration_min
+            (self.CALORIES_WEIGHT_MULTIPLIER
+             * self.weight
+             + (self.get_mean_speed()
+                ** self.CALORIES_MEAN_SPEED_EXPONENT
+                // self.height)
+             * self.CALORIES_LOCAL_MULTIPLIER_WALK
+             * self.weight)
+             * duration_min
         )
         return calories
 
@@ -144,20 +144,20 @@ class Swimming(Training):
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
         speed: float = (
-                self.length_pool
-                * self.count_pool
-                / self.M_IN_KM
-                / self.duration
+            self.length_pool
+            * self.count_pool
+            / self.M_IN_KM
+            / self.duration
         )
         return speed
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         calories: float = (
-                (self.get_mean_speed()
-                 + self.CALORIES_MEAN_SPEED_ADDEND)
-                * self.CALORIES_LOCAL_MULTIPLIER_SWIM
-                * self.weight
+            (self.get_mean_speed()
+             + self.CALORIES_MEAN_SPEED_ADDEND)
+            * self.CALORIES_LOCAL_MULTIPLIER_SWIM
+            * self.weight
         )
         return calories
 
