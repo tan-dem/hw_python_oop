@@ -118,7 +118,7 @@ class SportsWalking(Training):
                 // self.height)
              * self.CALORIES_LOCAL_MULTIPLIER_WALK
              * self.weight)
-             * duration_min
+            * duration_min
         )
         return calories
 
