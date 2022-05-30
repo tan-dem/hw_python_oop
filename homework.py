@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Optional, Type
 
 
@@ -22,13 +22,7 @@ class InfoMessage:
 
     def get_message(self) -> str:
         """Вернуть строку сообщения с данными о тренировке."""
-        message_str = self.MESSAGE_STR_CONST.format(
-            training_type=self.training_type,
-            duration=self.duration,
-            distance=self.distance,
-            speed=self.speed,
-            calories=self.calories,
-        )
+        message_str = self.MESSAGE_STR_CONST.format(**asdict(self))
         return message_str
 
 
@@ -39,11 +33,12 @@ class Training:
     M_IN_KM: int = 1000
     MIN_IN_HOUR: int = 60
 
-    def __init__(self,
-                 action: int,
-                 duration: float,
-                 weight: float,
-                 ) -> None:
+    def __init__(
+        self,
+        action: int,
+        duration: float,
+        weight: float,
+    ) -> None:
         self.action = action
         self.duration = duration
         self.weight = weight
@@ -64,11 +59,13 @@ class Training:
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
-        message: InfoMessage = InfoMessage(self.__class__.__name__,
-                                           self.duration,
-                                           self.get_distance(),
-                                           self.get_mean_speed(),
-                                           self.get_spent_calories())
+        message: InfoMessage = InfoMessage(
+            self.__class__.__name__,
+            self.duration,
+            self.get_distance(),
+            self.get_mean_speed(),
+            self.get_spent_calories(),
+        )
         return message
 
 
@@ -98,12 +95,13 @@ class SportsWalking(Training):
     CALORIES_MEAN_SPEED_EXPONENT: int = 2
     CALORIES_LOCAL_MULTIPLIER_WALK: float = 0.029
 
-    def __init__(self,
-                 action: int,
-                 duration: float,
-                 weight: float,
-                 height: float,
-                 ) -> None:
+    def __init__(
+        self,
+        action: int,
+        duration: float,
+        weight: float,
+        height: float,
+    ) -> None:
         super().__init__(action, duration, weight)
         self.height = height
 
@@ -130,13 +128,14 @@ class Swimming(Training):
     CALORIES_MEAN_SPEED_ADDEND: float = 1.1
     CALORIES_LOCAL_MULTIPLIER_SWIM: int = 2
 
-    def __init__(self,
-                 action: int,
-                 duration: float,
-                 weight: float,
-                 length_pool: float,
-                 count_pool: float,
-                 ) -> None:
+    def __init__(
+        self,
+        action: int,
+        duration: float,
+        weight: float,
+        length_pool: float,
+        count_pool: float,
+    ) -> None:
         super().__init__(action, duration, weight)
         self.length_pool = length_pool
         self.count_pool = count_pool
@@ -164,9 +163,11 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Optional[Training]:
     """Прочитать данные полученные от датчиков."""
-    training_dict: dict[str, Type] = {'SWM': Swimming,
-                                      'RUN': Running,
-                                      'WLK': SportsWalking}
+    training_dict: dict[str, Type[Training]] = {
+        'SWM': Swimming,
+        'RUN': Running,
+        'WLK': SportsWalking,
+    }
     try:
         training: Training = training_dict[workout_type](*data)
         return training
